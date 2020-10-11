@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import UserRegisterForm
+from Tickets.models import Ticket
 
 
 def register(request):
@@ -20,5 +21,11 @@ def register(request):
 
 @login_required()
 def dashboard(request):
-    return render(request, 'Users/dashboard.html')
+    print(request.user.id)
+    user_status = Ticket.objects.filter(assigned_to=request.user.id)
+
+    context = {
+        'tickets': user_status
+    }
+    return render(request, 'Users/dashboard.html', context)
 

@@ -2,5 +2,48 @@
 {% extends 'Users/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-	<h1>{{ user.username }}</h1>
+	<h1>{{ user.username }}'s Dashboard</h1>
+	<section id="dashboard" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if tickets %}
+            <p>Here are the Ticket Status of {{ user.username }}</p>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Ticket Name</th>
+                  <th scope="col">Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ticket in tickets %}
+                  <tr>
+                    <td>{{ ticket.name }}</td>
+                      {% if ticket.status == 0 %}
+	                    <td>Draft</td>
+	                  {% elif ticket.status == 1 %}
+	                    <td>ONGOING</td>
+	                  {% elif ticket.status == 2 %}
+	                    <td>COMPLETED</td>
+	                  {% endif %}
+                    <td>
+	                  {% if ticket.status == 1 %}
+                        <a class="btn btn-light" href="#">Change status</a>
+	                  {% else %}
+	                    <p></p>
+	                  {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p>You have not made any inquiries</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock content %}
