@@ -30,9 +30,7 @@
 	                  {% endif %}
                     <td>
 	                  {% if ticket.status == 1 %}
-                        <a class="btn btn-light" href="#">Change status</a>
-	                  {% else %}
-	                    <p></p>
+                        <a class="btn btn-light" href="/status_change/{{ticket.id}}/">Change status</a>
 	                  {% endif %}
                     </td>
                   </tr>

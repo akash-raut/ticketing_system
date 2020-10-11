@@ -21,7 +21,6 @@ def register(request):
 
 @login_required()
 def dashboard(request):
-    print(request.user.id)
     user_status = Ticket.objects.filter(assigned_to=request.user.id)
 
     context = {
@@ -29,3 +28,13 @@ def dashboard(request):
     }
     return render(request, 'Users/dashboard.html', context)
 
+
+@login_required()
+def status_change(request,id):
+    print(request.method)
+    # obj = Ticket.objects.get(assigned_to=request.user.id)
+    obj = Ticket.objects.get(id=id)
+    obj.status = 2
+    obj.save()
+    messages.success(request, 'Status changed successfully')
+    return redirect('dashboard')
